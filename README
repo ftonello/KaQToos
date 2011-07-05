@@ -1,0 +1,12 @@
+KaQToos
+=======
+
+KaQToos is a version of Kactoos website for desktop using their api.
+
+Dependencies
+------------
+
+KaQToos depende on:
+* >= Qt 4.7
+* >= KQOAuth 1.0
+* >= CMake 2.8
