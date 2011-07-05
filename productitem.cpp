@@ -1,4 +1,5 @@
 #include <QHttp>
+#include <QBuffer>
 
 #include "productitem.h"
 
@@ -43,7 +44,10 @@ void ProductItem::setImage(const QString &image_url)
 	if (buf.open(QBuffer::ReadWrite)) {
 		QHttp http;
 		if (http.get(image_url, &buf)) {
-			m_image = QImage(buf.data().constData(), m_size.width(), m_size.height(), QImage::Format_RGB32);
+			QImage img;
+			img.loadFromData(buf.data());
+
+			m_image = img.scaled(m_size);
 
 			http.close();
 
@@ -53,7 +57,7 @@ void ProductItem::setImage(const QString &image_url)
 
 	// tratamento de erro
 	m_image = QImage(m_size, QImage::Format_RGB32);
-	m_iamge.fill(0xFFFFFF); // em branco
+	m_image.fill(0xFFFFFF); // em branco
 }
 
 void ProductItem::setTime(int time)

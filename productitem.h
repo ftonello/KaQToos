@@ -11,7 +11,7 @@ public:
 	ProductItem(QGraphicsItem *parent = 0);
 
 	void paint(QPainter *painter,
-	           clonst QStyleOptionGraphicsItem *option,
+	           const QStyleOptionGraphicsItem *option,
 	           QWidget *widget);
 
 	void setId(int id);
