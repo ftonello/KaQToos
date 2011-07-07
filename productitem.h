@@ -6,13 +6,23 @@
 #include <QUrl>
 #include <QImage>
 
-class ProductItem : public QGraphicsItem {
+#include "downloadmanager.h"
+
+class QBuffer;
+
+class ProductItem : public QObject, public QGraphicsItem {
+	Q_OBJECT
+	Q_INTERFACES(QGraphicsItem)
+
 public:
 	ProductItem(QGraphicsItem *parent = 0);
+	~ProductItem();
 
-	void paint(QPainter *painter,
-	           const QStyleOptionGraphicsItem *option,
-	           QWidget *widget);
+	virtual QRectF boundingRect() const;
+
+	virtual void paint(QPainter *painter,
+	                   const QStyleOptionGraphicsItem *option,
+	                   QWidget *widget);
 
 	void setId(int id);
 	void setName(const QString &name);
@@ -23,7 +33,15 @@ public:
 	void setActualPrice(qreal price);
 	void setPrice(qreal price);
 
+private slots:
+	// Network
+	void receiveBuffer(QBuffer *buffer, const QString &url);
+
 private:
+	// network
+	DownloadManager downloadManager;
+
+	// properties
 	int      m_id;
 	QString  m_name;
 	QString  m_desc;
@@ -33,8 +51,13 @@ private:
 	qreal    m_actualPrice;
 	qreal    m_price;
 
+	QBuffer *m_buffer;
+
 	// size default
-	QSize    m_size;
+	QSize    m_imgSize; //image default
+	QSize    m_size;    //all drawing size
+
+	void bufferToImage(); // called by the receiveBuffer
 };
 
 #endif // PRODUCTITEM_H

@@ -20,14 +20,16 @@ set(SOURCE_FILES
 	main.cpp
 	kaqtoos.cpp
 	productitem.cpp
+	downloadmanager.cpp
 )
 
 set(HEADER_FILES_WITH_MOC
 	kaqtoos.h
+	productitem.h
+	downloadmanager.h
 )
 
 set(HEADER_FILES
-	productitem.h
 	${HEADER_FILES_WITH_MOC}
 )
 
